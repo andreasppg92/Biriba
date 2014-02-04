@@ -1,13 +1,17 @@
 import tornado.ioloop
 import tornado.web
 import settings
+import os.path
 
-settings = {
-  "cookie_secret": settings.secret
-}
+from Handlers.LoginHandler import LoginHandler
+
 application = tornado.web.Application([
-  (r"/", None),
-], **settings)
+  (r"/login", LoginHandler),
+], **{
+  "cookie_secret": settings.secret,
+  "static_path"  : settings.static,
+  "xsrf_cookies" : settings.xsrf,
+})
 
 def main():
   application.listen(settings.port)
