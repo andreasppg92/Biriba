@@ -1,10 +1,24 @@
 import tornado.ioloop
 import tornado.web
+import optparse
 import settings
-import os.path
+import logging
 
 from Handlers.LoginHandler import LoginHandler
+from Database.Database import Database
 
+# Options parser
+parser = optparse.OptionParser()
+parser.add_option("-d", "--debug", action="store_true", dest="debug", 
+  help="Enable debug mode")
+parser.add_option("-c", "--create", action="store_true", dest="create", 
+  help="Create the tables of the database")
+(options, args) = parser.parse_args()
+
+# Database
+database = Database()
+
+# Tornado application
 application = tornado.web.Application([
   (r"/login", LoginHandler),
 ], **{
@@ -14,7 +28,21 @@ application = tornado.web.Application([
 })
 
 def main():
+  # Set logging
+  logging.basicConfig(
+    format="%(asctime)s %(levelname)s: %(message)s",
+    datefmt="%d/%m/%Y %H:%M:%S",
+    level=logging.DEBUG if options.debug else logging.INFO
+  )
+
+  # Connect and initialize database
+  database.connect()
+  if options.create:
+    database.createTables()
+
+  # Start the server
   application.listen(settings.port)
+  logging.info("Application listening on port " + str(settings.port))
   tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":

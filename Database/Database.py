@@ -1,22 +1,33 @@
 import psycopg2
+import logging
 
 from Tables.UsersTable import UsersTable
+from Operator import Operator
 
 class Database(object):
   def __init__(self):
     self.name = "database"
-    self.user = "andres"
-    self.tables = {
-      "users": UsersTable()
-    }
-    self.connection = None
-    self.cursor = None
+    self.user = "andreas"
+    self.operator = None
+    self.tables = [
+      UsersTable()
+    ]
 
-  def connectAndInitialize(self):
-   # try:
-    self.connection = psycopg2.connect(database="database", user="andreas")
-    cursor = self.connection.cursor()
-    for name, table in self.tables.iteritems():
-      table.initialize(cursor)
-   # except:
-   #   print "Error on connecting to database"
+  def connect(self):
+    try:
+      connection = psycopg2.connect(database=self.name, user=self.user)
+    except Exception as e:
+      logging.error("Error connecting to database")
+      map(logging.debug, e.split("\n"))
+      return
+    
+    self.operator = Operator(connection)
+    logging.info("Connected to database")
+  
+  def createTables(self):
+    for table in self.tables():
+      self.operator.queue(table.drop())
+      self.operator.queue(table.create())
+    self.operator.executeAll()
+    self.operator.commit()
+    logging.info("Tables created")

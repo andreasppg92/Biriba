@@ -1,4 +1,4 @@
-import Database
+from Database import Database
 
-d = Database.Database()
-d.connectAndInitialize()
+d = Database()
+d.connect()
