@@ -11,12 +11,14 @@ from Database.Database import Database
 parser = optparse.OptionParser()
 parser.add_option("-d", "--debug", action="store_true", dest="debug", 
   help="Enable debug mode")
-parser.add_option("-c", "--create", action="store_true", dest="create", 
-  help="Create the tables of the database")
+parser.add_option("-D", "--drop", action="store_true", dest="drop", 
+  help="Drop tables of the database before ")
 (options, args) = parser.parse_args()
+
 
 # Database
 database = Database()
+
 
 # Tornado application
 application = tornado.web.Application([
@@ -26,6 +28,7 @@ application = tornado.web.Application([
   "static_path"  : settings.static,
   "xsrf_cookies" : settings.xsrf,
 })
+
 
 def main():
   # Set logging
@@ -37,8 +40,9 @@ def main():
 
   # Connect and initialize database
   database.connect()
-  if options.create:
-    database.createTables()
+  if options.drop:
+    database.dropTables()
+  database.initialize()
 
   # Start the server
   application.listen(settings.port)
