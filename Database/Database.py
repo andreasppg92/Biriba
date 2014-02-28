@@ -8,13 +8,15 @@ class Database(object):
     self.connection = None
     self.name = "database"
     self.user = "andreas"
-    self.tables = [
-      UsersTable()
-    ]
+    self.tables = {
+      "users": UsersTable()
+    }
 
   def connect(self):
     try:
       self.connection = psycopg2.connect(database=self.name, user=self.user)
+      for _, table in self.tables.iteritems():
+        table.link(self.connection.cursor())
       logging.info("Connected to database")
     except Exception as e:
       logging.error("Error connecting to database")
@@ -23,11 +25,11 @@ class Database(object):
   def initialize(self):
     if self.connection is None:
       logging.error("Intialization needs connection first")
-    for table in self.tables:
-      table.link(self.connection.cursor())
+      return
+    for _, table in self.tables.iteritems():
       if not table.exists():
         table.create()
   
   def dropTables(self):
-    for table in self.tables:
+    for _, table in self.tables.iteritems():
       table.drop()

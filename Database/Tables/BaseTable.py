@@ -1,13 +1,14 @@
 import logging
 
 class BaseTable(object):
+  
   def __init__(self):
     self.name = "None"
     self.fields = {}
     self.cursor = None
 
   def link(self, cursor):
-    self.cursor = cursor 
+    self.cursor = cursor
 
   def exists(self):
     command = "SELECT * FROM information_schema.tables WHERE table_name=%s"
@@ -21,7 +22,9 @@ class BaseTable(object):
       fields.append(field + " " + details)
     self.cursor.execute(command + " (" + ", ".join(fields) + ")")
     self.cursor.connection.commit()
+    logging.debug("Table " + self.name + " created")
 
   def drop(self):
     self.cursor.execute("DROP TABLE " + self.name)
     self.cursor.connection.commit()
+    logging.debug("Table " + self.name + " droped")
