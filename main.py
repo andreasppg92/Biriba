@@ -42,7 +42,11 @@ def main():
   database.connect()
   if options.drop:
     database.dropTables()
-  database.initialize()
+    database.initialize()
+    database.tables["users"].addUser("admin", "123")
+  else:
+    database.initialize()
+
 
   # Start the server
   application.listen(settings.port)

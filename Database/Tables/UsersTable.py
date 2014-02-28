@@ -6,6 +6,7 @@ class UsersTable(BaseTable):
     self.name   = "users"
     self.fields = {
       "username": "text PRIMARY KEY",
+      "email": "text"
       "password": "text"
     }
 
@@ -14,9 +15,14 @@ class UsersTable(BaseTable):
     self.cursor.execute(command, (username, password))
     self.cursor.connection.commit()
 
-  def userExists(self, username):
+  def usernameExists(self, username):
     command = "SELECT * FROM " + self.name + " WHERE username=%s"
     self.cursor.execute(command, (username,))
+    return self.cursor.rowcount != 0
+
+  def emailExists(self, email):
+    command = "SELECT * FROM " + self.name + " WHERE email=%s"
+    self.cursor.execute(command, (email,))
     return self.cursor.rowcount != 0
 
   def checkLogin(self, username, password):
