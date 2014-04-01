@@ -19,16 +19,14 @@ parser.add_option("-D", "--drop", action="store_true", dest="drop",
 # Database
 database = Database()
 
-
 # Tornado application
 application = tornado.web.Application([
   (r"/login", LoginHandler),
 ], **{
   "cookie_secret": settings.secret,
   "static_path"  : settings.static,
-  "xsrf_cookies" : settings.xsrf,
+  "database"     : database
 })
-
 
 def main():
   # Set logging
@@ -46,7 +44,6 @@ def main():
     database.tables["users"].addUser("admin", "123")
   else:
     database.initialize()
-
 
   # Start the server
   application.listen(settings.port)

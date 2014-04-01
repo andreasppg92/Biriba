@@ -1,11 +1,12 @@
 import tornado.web
 
 class BaseHandler(tornado.web.RequestHandler):
-  def initialize(self):
-    pass
+  def __init__(self, request, kwargs):
+    super(BaseHandler, self).__init__(request, kwargs)
+    self.tables = self.application.settings["database"].tables
 
   def authenticate(self, success, *args, **kwargs):
-    if self.get_secure_cookie("name") == None:
+    if self.get_secure_cookie("user") == None:
       self.redirect("/login")
     else:
       success(*args, **kwargs)

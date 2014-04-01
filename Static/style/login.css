@@ -1,0 +1,68 @@
+#welcome {
+	font-size: 25px;
+	margin-top: 5%;
+}
+
+#logo {
+	font-style: italic;
+	font-size: 60px;
+}
+
+#loginForm {
+	margin-top: 60px;
+	width: 400px;
+
+	padding-top: 20px;
+	padding-bottom: 20px;
+
+	border-radius: 10px;
+	border-style: double;
+	background: #3A3;
+	opacity: 90%;
+}
+
+#usernameField, #passwordField {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	width: 300px;
+
+
+	border-radius: 5px;
+	text-align: center;
+}
+
+#rememberField {
+	margin-top: 10px;
+}
+
+#rememberText {
+	font-style: italic;
+	color: #222;
+}
+
+#loginButton {
+	margin-top: 8px;
+	width: 100px;
+	height: 30px;
+
+	font-size: 13px;
+	border-radius: 10px;
+	background:#DDD;
+	border:1px solid #333;
+}
+
+#loginButton:hover {
+	background: #EEE;
+}
+
+#register {
+	font-size: 12px;
+	font-style: italic;
+	color: #11F;
+	text-align: right;
+}
+
+#info {
+	color: #F33;
+	font-style: italic;
+}

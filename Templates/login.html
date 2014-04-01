@@ -2,16 +2,29 @@
 <head>
   <title> Biriba Online </title>
   <link rel="stylesheet" href="{{static_url('style/basic.css')}}" type="text/css">
+  <link rel="stylesheet" href="{{static_url('style/login.css')}}" type="text/css">
 
 </head>
+<center>
+	<div id="welcome">
+		Welcome to
+	</div>
+	<div id="logo">
+		Biriba Online
+	</div>
 
-<form action="/login" method=POST>
-  <div id="container">
-    <input type="text" name="username"><br>
-    <input type="password" name="password"><br>
-    <input type="submit" value="Log In">
-  </div>
-</form>
-
+	<form id="loginForm" action="/login" method=POST>
+	    <input id="usernameField" name="user" type="text" placeholder="username"><br>
+	    <input id="passwordField" name="pass" type="password" placeholder="password"><br>
+	    <input id="rememberField" name="remember" type="checkbox" value="remember"><span id="rememberText">Remember me</span><br>
+	    <input id="loginButton" type="submit" value="Log in"><br>
+	    <a id="register" href="/register">Register Here</a></span>
+	</form>
+	{% if data["failed"] %}
+		<div id="info">
+			Incorrect username or password
+		<div>
+	{% end %}
+</center>
 
 </html>
