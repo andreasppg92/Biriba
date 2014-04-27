@@ -55,7 +55,7 @@
 	background: #EEE;
 }
 
-#register {
+a {
 	font-size: 12px;
 	font-style: italic;
 	color: #11F;
@@ -65,4 +65,9 @@
 #info {
 	color: #F33;
 	font-style: italic;
+}
+
+#reset {
+	color: #333;
+	font-style: normal;
 }

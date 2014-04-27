@@ -13,8 +13,8 @@ class UsersTable(BaseTable):
     }
 
   def addUser(self, username, password):
-    password = hashlib.sha512(password).hexdigest
-    command = "INSERT INTO " + self.name + "VALUES (%s, %s)"
+    password = hashlib.sha512(password).hexdigest()
+    command = "INSERT INTO " + self.name + " VALUES (%s, %s)"
     self.cursor.execute(command, (username, password))
     self.cursor.connection.commit()
 
@@ -29,7 +29,7 @@ class UsersTable(BaseTable):
     return self.cursor.rowcount != 0
 
   def authenticate(self, username, password):
-    password = hashlib.sha512(password).hexdigest
+    password = hashlib.sha512(password).hexdigest()
     command = "SELECT * FROM " + self.name + \
               " WHERE username=%s AND password=%s"
     self.cursor.execute(command, (username, password))

@@ -16,13 +16,14 @@
 	<form id="loginForm" action="/login" method=POST>
 	    <input id="usernameField" name="user" type="text" placeholder="username"><br>
 	    <input id="passwordField" name="pass" type="password" placeholder="password"><br>
-	    <input id="rememberField" name="remember" type="checkbox" value="remember"><span id="rememberText">Remember me</span><br>
+	    <label><input id="rememberField" name="remember" type="checkbox" value="1"><span id="rememberText">Remember me</span></label><br>
 	    <input id="loginButton" type="submit" value="Log in"><br>
 	    <a id="register" href="/register">Register Here</a></span>
 	</form>
 	{% if data["failed"] %}
 		<div id="info">
-			Incorrect username or password
+			Incorrect username or password<br>
+			<a id="reset" href="/reset">Forgot your password?</a></span>
 		<div>
 	{% end %}
 </center>

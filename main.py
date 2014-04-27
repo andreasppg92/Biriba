@@ -12,7 +12,9 @@ parser = optparse.OptionParser()
 parser.add_option("-d", "--debug", action="store_true", dest="debug", 
   help="Enable debug mode")
 parser.add_option("-D", "--drop", action="store_true", dest="drop", 
-  help="Drop tables of the database before ")
+  help="Drop tables")
+parser.add_option("-A", "--admin", action="store_true", dest="admin", 
+  help="Create admin user")
 (options, args) = parser.parse_args()
 
 
@@ -40,11 +42,13 @@ def main():
   database.connect()
   if options.drop:
     database.dropTables()
-    database.initialize()
-    database.tables["users"].addUser("admin", "123")
-  else:
-    database.initialize()
+  database.initialize()
 
+  #Add admin user if needed
+  if options.admin and not database.tables["users"].usernameExists("admin"):
+    database.tables["users"].addUser("admin", "123")
+    logging.info("Admin user created")
+    
   # Start the server
   application.listen(settings.port)
   logging.info("Application listening on port " + str(settings.port))

@@ -22,9 +22,9 @@ class BaseTable(object):
       fields.append(field + " " + details)
     self.cursor.execute(command + " (" + ", ".join(fields) + ")")
     self.cursor.connection.commit()
-    logging.debug("Table " + self.name + " created")
+    logging.info("Table " + self.name + " created")
 
   def drop(self):
     self.cursor.execute("DROP TABLE " + self.name)
     self.cursor.connection.commit()
-    logging.debug("Table " + self.name + " droped")
+    logging.info("Table " + self.name + " droped")
