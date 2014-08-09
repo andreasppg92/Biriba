@@ -26,7 +26,6 @@
 	margin-bottom: 2px;
 	width: 300px;
 
-
 	border-radius: 5px;
 	text-align: center;
 }
@@ -55,11 +54,11 @@
 	background: #EEE;
 }
 
-a {
-	font-size: 12px;
+#registerHRef {
+	font-size: 13px;
 	font-style: italic;
 	color: #11F;
-	text-align: right;
+	text-align: center;
 }
 
 #info {

@@ -3,12 +3,18 @@ import logging
 from Handlers.BaseHandler import BaseHandler
 
 class LoginHandler(BaseHandler):
+  def __init__(self, request, kwargs):
+    super(LoginHandler, self).__init__(request, kwargs)
+    self.html = "login.html"
+    self.contract = {"failed": bool}
+
+
   def get(self):
     if self.loggedIn():
       self.redirect("/")
     else:
       data = {"failed": False}
-      self.render("../Templates/login.html", data=data)
+      self.render(data)
 
   def post(self):
     users = self.tables["users"]
@@ -24,12 +30,12 @@ class LoginHandler(BaseHandler):
     except Exception as e:
       remember = False
     
-    if users.authenticate(username, password):
+    if not users.authenticate(username, password):
+      data = {"failed": True}
+      self.render("../Templates/login.html", data=data)
+    else:
       if remember:
         self.set_secure_cookie("user", username)
       else:
         self.set_secure_cookie("user", username, expires_days=None)
       self.redirect("/")
-    else:
-      data = {"failed": True}
-      self.render("../Templates/login.html", data=data)

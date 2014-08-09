@@ -1,0 +1,14 @@
+#borderDiv {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	right: 10px;
+	bottom: 10px;
+
+	background: #3A3;
+	border-radius: 20px;
+	border-color: #171;
+	border-width: 2px;
+	border-style: solid;
+}
+
