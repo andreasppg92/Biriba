@@ -1,6 +1,6 @@
 import logging
 
-from Handlers.BaseHandler import BaseHandler
+from BaseHandler import BaseHandler
 
 class LoginHandler(BaseHandler):
   def __init__(self, request, kwargs):

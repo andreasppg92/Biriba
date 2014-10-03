@@ -12,3 +12,22 @@
 	border-style: solid;
 }
 
+#toBeFilled {
+	position: relative;
+	width: 75%;
+	height: 75%;
+	background: #383
+}
+
+#hand {
+	position: relative;
+	height: 100px;
+	background: #F00;
+}
+
+.card {
+	position: absolute;
+	border: 1px solid;
+	border-radius: 8px;
+	height: 100px;
+}

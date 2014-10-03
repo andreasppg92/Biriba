@@ -3,11 +3,13 @@ import logging
 import inspect
 import os 
 
+HTML_PATH = "../../Html"
 
 class BaseHandler(tornado.web.RequestHandler):
   def __init__(self, request, kwargs):
     super(BaseHandler, self).__init__(request, kwargs)
     self.tables = self.application.settings["database"].tables
+    self.controller = self.application.settings["controller"]
     self.html = None
     self.contract = None
 
@@ -38,14 +40,12 @@ class BaseHandler(tornado.web.RequestHandler):
     if self.contract == None:
       logging.error("Contract not sepcified")
     
-    path = "html/" + self.html
-    if not os.path.exists(os.path.abspath("Handlers/" + path)):
-      logging.error(("Html file not found: " + path))
-
     for key, valueType in self.contract.iteritems():
       if not key in data:
         logging.error("Missing key: \"" + key + "\"")
       elif type(data[key]) != valueType:
         logging.error("Misstyped data: \"" + key + "\"")
+
+    path = HTML_PATH + "/" + self.html
 
     super(BaseHandler, self).render(path, data = data)

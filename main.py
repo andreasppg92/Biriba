@@ -4,10 +4,12 @@ import optparse
 import logging
 import os
 
-from Handlers.LoginHandler import LoginHandler
-from Handlers.IndexHandler import IndexHandler
-from Handlers.PlayHandler import PlayHandler
+from Source.View.LoginHandler import LoginHandler
+from Source.View.IndexHandler import IndexHandler
+from Source.View.PlayHandler import PlayHandler
+from Source.Controller import Controller
 from Database.Database import Database
+
 
 SETTINGS = {
   "secret": "17l/pdU2SAeJWx61w3TGPwQ1tI2hPUVGgUfmqxKHKWY",
@@ -29,6 +31,9 @@ parser.add_option("-A", "--admin", action="store_true", dest="admin",
 # Database
 database = Database()
 
+# Controller
+controller = Controller()
+
 # Tornado application
 application = tornado.web.Application([
   (r"/login", LoginHandler),
@@ -37,7 +42,8 @@ application = tornado.web.Application([
 ], **{
   "cookie_secret": SETTINGS["secret"],
   "static_path"  : SETTINGS["static"],
-  "database"     : database
+  "database"     : database,
+  "controller"   : controller
 })
 
 def main():
